@@ -1,4 +1,4 @@
 import ReactDOM from "react-dom";
-import { App } from "./App";
+import { DairyApp } from "./DairyApp";
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<DairyApp />, document.getElementById("root"));

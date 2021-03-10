@@ -20,12 +20,13 @@ const devConfig = {
   plugins: [
     new HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
-    new DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("development"),
-        PUBLIC_URL: JSON.stringify(path.resolve(__dirname, "../public")),
-      },
-    }),
+    // new DefinePlugin({
+    //   "process.env": {
+    //     NODE_ENV: JSON.stringify("development"),
+    //     PUBLIC_URL: JSON.stringify(path.resolve(__dirname, "../public")),
+    //     // REACT_APP_API_URL,
+    //   },
+    // }),
   ],
   devtool: "eval-source-map",
   module: {

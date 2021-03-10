@@ -15,12 +15,12 @@ const prodConfig = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    new DefinePlugin({
-      "process.env": {
-        NODE_ENV: JSON.stringify("production"),
-        PUBLIC_URL: JSON.stringify(path.resolve(__dirname, "../public")),
-      },
-    }),
+    // new DefinePlugin({
+    //   "process.env": {
+    //     NODE_ENV: JSON.stringify("production"),
+    //     PUBLIC_URL: JSON.stringify(path.resolve(__dirname, "../public")),
+    //   },
+    // }),
   ],
   module: {
     rules: [
