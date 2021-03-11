@@ -1,8 +1,9 @@
 export const types = {
   auth: {
+    startChecking: "[Auth] Start checking",
+    finishChecking: "[Auth] Finish Checking",
     login: "[Auth] Login",
     logout: "[Auth] Logout",
-    checkingFinish: "[Auth] Checking finish",
   },
   ui: {
     setError: "[UI] Set error",

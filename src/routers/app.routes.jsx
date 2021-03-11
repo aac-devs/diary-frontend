@@ -1,23 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { startChecking } from "../actions/auth.actions";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { startAuth } from "../actions/auth.actions";
+import { HomePage } from "../components/views/HomePage";
+import { LoginPage } from "../components/views/LoginPage";
+import { RegisterPage } from "../components/views/RegisterPage";
+import { AuthRouter } from "./auth.routes";
+import { PrivateRoute } from "./private.routes";
+import { PublicRoute } from "./public.routes";
 
 export const AppRouter = () => {
   const dispatch = useDispatch();
-  const { checking, uid, name } = useSelector((state) => state.auth);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { checking, logged: isLoggedIn } = useSelector((state) => state.auth);
+
+  console.log("+++++++++++++++++++Renderiza App Router");
 
   useEffect(() => {
-    dispatch(startChecking());
+    console.log("useEffect AppRouter*************************");
+    dispatch(startAuth());
   }, [dispatch]);
 
   if (checking) {
     return <h5>Espere...</h5>;
   }
-  console.log({ uid, name });
 
   return (
-    <div>
-      <h1>App Router</h1>
-    </div>
+    <Router>
+      <h1>Dairy App</h1>
+      <div>
+        <Switch>
+          <PublicRoute
+            path="/auth"
+            component={AuthRouter}
+            isAuthenticated={isLoggedIn}
+          />
+          <PrivateRoute
+            exact
+            path="/"
+            component={HomePage}
+            isAuthenticated={isLoggedIn}
+          />
+        </Switch>
+      </div>
+    </Router>
   );
 };

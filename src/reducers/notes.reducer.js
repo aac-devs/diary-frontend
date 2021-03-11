@@ -15,6 +15,7 @@
 import { types } from "../types/types";
 
 const initialState = {
+  count: 0,
   notes: [],
   active: null,
 };
@@ -36,7 +37,8 @@ export const notesReducer = (state = initialState, action) => {
     case types.notes.load:
       return {
         ...state,
-        notes: [...action.payload],
+        count: action.payload.count,
+        notes: [...action.payload.rows],
       };
     case types.notes.updated:
       return {
