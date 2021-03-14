@@ -31,3 +31,11 @@ const loadNotes = (notes) => ({
   type: types.notes.load,
   payload: notes,
 });
+
+export const activeNote = (id, note) => ({
+  type: types.notes.active,
+  payload: {
+    id,
+    ...note,
+  },
+});
