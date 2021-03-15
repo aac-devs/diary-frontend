@@ -1,7 +1,7 @@
 import { types } from "../types/types";
 
 const initialState = {
-  checking: true,
+  checking: false,
   logged: false,
   uid: null,
   name: null,

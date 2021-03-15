@@ -1,36 +1,42 @@
-import { useSelector } from "react-redux";
-import { Note } from "./Note";
+import { useDispatch, useSelector } from "react-redux";
+import { NoteCard } from "./NoteCard";
+import styled from "styled-components";
+import { deactiveNote, selectNewNote } from "../../actions/notes.actions";
+import { startLogout } from "../../actions/auth.actions";
 
-export const NotesList = ({ screen }) => {
+const Box = styled.div`
+  border: 1px solid black;
+  background-color: wheat;
+  width: ${(props) => props.size};
+`;
+
+export const NotesList = () => {
+  const dispatch = useDispatch();
   const { notes } = useSelector((state) => state.notes);
-  console.log(notes);
-  let size = 0;
+  const { name } = useSelector((state) => state.auth);
 
-  if (screen < 768) {
-    size = screen - 20;
-  } else if (screen < 1100) {
-    size = Math.floor((screen - 30) / 2);
-  } else {
-    size = 500;
-  }
-  if (size > 500) {
-    size = 500;
-  }
-  if (size < 300) {
-    size = 300;
-  }
+  const handleAddNew = () => {
+    // dispatch(deactiveNote());
+    dispatch(selectNewNote());
+  };
 
-  console.log(size);
+  const handleLogout = () => {
+    dispatch(startLogout());
+  };
 
   return (
-    <div
-      style={{
-        width: `${size}px`,
-        border: "1px solid black",
-      }}
-    >
-      <h1>NotesList</h1>
-      {notes && notes.map((note) => <Note key={note.id} {...note} />)}
-    </div>
+    <Box size={`${300}px`}>
+      {notes && (
+        <>
+          <span>{name}</span>
+          <button onClick={handleLogout}>Logout</button>
+          <br />
+          <button onClick={handleAddNew}>New</button>
+          {notes.map((note, index) => (
+            <NoteCard key={index} {...note} />
+          ))}
+        </>
+      )}
+    </Box>
   );
 };

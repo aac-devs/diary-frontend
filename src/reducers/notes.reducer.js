@@ -29,6 +29,11 @@ export const notesReducer = (state = initialState, action) => {
           ...action.payload,
         },
       };
+    case types.notes.unactive:
+      return {
+        ...state,
+        active: null,
+      };
     case types.notes.addNew:
       return {
         ...state,
@@ -56,6 +61,7 @@ export const notesReducer = (state = initialState, action) => {
     case types.notes.logoutCleaning:
       return {
         ...state,
+        count: 0,
         notes: [],
         active: null,
       };

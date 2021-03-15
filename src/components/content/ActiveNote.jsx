@@ -1,30 +1,71 @@
-export const ActiveNote = ({ screen }) => {
-  let size = 0;
+import { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deactiveNote, startSaveNote } from "../../actions/notes.actions";
+import { useForm } from "../../hooks/useForm";
+import { NoteAppbar } from "./NoteAppbar";
+import { NothingSelected } from "./NothingSelected";
 
-  if (screen < 768) {
-    size = screen - 20;
-  } else if (screen < 1100) {
-    size = Math.floor((screen - 30) / 2);
-  } else {
-    size = 500;
-  }
-  if (size > 500) {
-    size = 500;
-  }
-  if (size < 300) {
-    size = 300;
-  }
+export const ActiveNote = () => {
+  const dispatch = useDispatch();
+  const { active: note } = useSelector((state) => state.notes);
+
+  const [formValues, handleInputChange, reset] = useForm(note);
+  const { title, body } = formValues;
+
+  const activeId = useRef(note.id);
+
+  useEffect(() => {
+    if (note.id !== activeId.current) {
+      reset(note);
+      activeId.current = note.id;
+    }
+  }, [note, reset]);
+
+  const handleBackToList = () => {
+    dispatch(deactiveNote());
+  };
+
+  const handleSaveNote = () => {
+    dispatch(
+      startSaveNote({
+        title,
+        body,
+      })
+    );
+  };
 
   return (
     <div
       style={{
-        width: `${size}px`,
-        // minWidth: "300px",
-        // maxWidth: "500px",
+        width: `${300}px`,
         border: "1px solid black",
       }}
     >
-      <h1>ActiveNote</h1>
+      <div>
+        <NoteAppbar
+          date={note.date}
+          showDeleteButton={!!note.id}
+          showSaveButton={note.title !== title || note.body !== body}
+          handleSaveNote={handleSaveNote}
+        />
+        <>
+          <input
+            type="text"
+            name="title"
+            value={title}
+            placeholder="Some awesome title"
+            onChange={handleInputChange}
+          />
+          <textarea
+            name="body"
+            value={body}
+            onChange={handleInputChange}
+            placeholder="What happened today??"
+          ></textarea>
+          <button onClick={handleBackToList}>back</button>
+        </>
+      </div>
+      {/* {!active && <NothingSelected />} */}
     </div>
   );
 };

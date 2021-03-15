@@ -26,7 +26,7 @@ const fetchWithToken = (endpoint, data, method = "GET") => {
 };
 
 const fetchWithoutToken = (endpoint, data, method = "GET") => {
-  const url = `${baseUrl}/${endpoint}`; 
+  const url = `${baseUrl}/${endpoint}`;
   if (method === "GET") {
     return fetch(url);
   } else {

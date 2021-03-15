@@ -1,5 +1,6 @@
 import { fetchWithoutToken, fetchWithToken } from "../helpers/fetch";
 import { types } from "../types/types";
+import { noteLogout } from "./notes.actions";
 import {
   finishLoading,
   removeError,
@@ -8,7 +9,6 @@ import {
 } from "./ui.actions";
 
 export const startAuth = (type = "renew", email, password, name) => {
-  console.log("startAuth");
   return async (dispatch) => {
     try {
       dispatch(startChecking());
@@ -21,7 +21,6 @@ export const startAuth = (type = "renew", email, password, name) => {
         : fetchWithoutToken("auth/new", { name, email, password }, "POST"));
       const body = await resp.json();
       const { ok, uid, name: userName, token, msg, errors } = body;
-      console.log(body);
       if (ok) {
         localStorage.setItem("token", token);
         localStorage.setItem("token-init-date", new Date().getTime());
@@ -49,4 +48,20 @@ const startChecking = () => ({
 
 const finishChecking = () => ({
   type: types.auth.finishChecking,
+});
+
+export const startLogout = () => {
+  return async (dispatch) => {
+    dispatch(startLoading());
+    dispatch(removeError());
+    localStorage.removeItem("token");
+    localStorage.removeItem("token-init-date");
+    dispatch(logout());
+    dispatch(noteLogout());
+    dispatch(finishLoading());
+  };
+};
+
+export const logout = () => ({
+  type: types.auth.logout,
 });

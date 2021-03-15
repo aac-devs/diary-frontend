@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { activeNote } from "../../actions/notes.actions";
 
-export const Note = ({ id, title, body, date }) => {
+export const NoteCard = ({ id, title, body, date }) => {
   const dispatch = useDispatch();
 
   const handleNoteClick = () => {
@@ -13,7 +13,7 @@ export const Note = ({ id, title, body, date }) => {
       })
     );
   };
-  console.log({ id, title, body, date });
+  // console.log({ id, title, body, date });
 
   return (
     <div
