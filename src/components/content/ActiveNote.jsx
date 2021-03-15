@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deactiveNote, startSaveNote } from "../../actions/notes.actions";
+import { deactiveNote, startDeleting, startSaveNote } from "../../actions/notes.actions";
 import { useForm } from "../../hooks/useForm";
 import { NoteAppbar } from "./NoteAppbar";
 import { NothingSelected } from "./NothingSelected";
@@ -34,6 +34,11 @@ export const ActiveNote = () => {
     );
   };
 
+  const handleDeleteNote = () => {
+    dispatch(startDeleting(note.id));
+    dispatch(deactiveNote());
+  };
+
   return (
     <div
       style={{
@@ -47,6 +52,7 @@ export const ActiveNote = () => {
           showDeleteButton={!!note.id}
           showSaveButton={note.title !== title || note.body !== body}
           handleSaveNote={handleSaveNote}
+          handleDeleteNote={handleDeleteNote}
         />
         <>
           <input

@@ -10,15 +10,11 @@ export const LoginPage = () => {
     email: "aac@mail.com",
     password: "123456",
   });
-  console.log("--------------Renderiza Login Page");
-
   const { email, password } = formValues;
-
   const submitLogin = (e) => {
     e.preventDefault();
     dispatch(startAuth("login", email, password));
   };
-
   return (
     <div>
       <h3>Login</h3>

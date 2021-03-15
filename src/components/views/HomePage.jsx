@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { startLoadingNotes } from "../../actions/notes.actions";
 import { ActiveNote } from "../content/ActiveNote";
 import { NotesList } from "../content/NotesList";
+import { NothingSelected } from "../content/NothingSelected";
 
 export const HomePage = () => {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ export const HomePage = () => {
       {loading && <h5>Espere...</h5>}
       <NotesList />
       {active && <ActiveNote />}
+      {!active && <NothingSelected />}
     </>
   );
 };
